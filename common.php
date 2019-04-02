@@ -16,7 +16,7 @@
     $port = "3306";
     $user = "root";
     $password = "";
-    $dbname = "period";
+    $dbname = "assignments";
 
       $ds = "mysql:host={$host}:{$port};dbname={$dbname};charset=utf8";
 
@@ -38,10 +38,10 @@
   function handle_error($msg, $ex=NULL) {
     header("HTTP/1.1 400 Invalid Request");
     header("Content-type: text/plain");
-    print ("{$msg}\n");
     if ($ex) {
       print ("Error details: $ex \n");
     }
+    die("{$msg}\n");
   }
 
 ?>
