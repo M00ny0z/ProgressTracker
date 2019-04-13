@@ -16,7 +16,7 @@
     $port = "3306";
     $user = "root";
     $password = "";
-    $dbname = "assignments";
+    $dbname = "students";
 
       $ds = "mysql:host={$host}:{$port};dbname={$dbname};charset=utf8";
 
@@ -42,6 +42,15 @@
       print ("Error details: $ex \n");
     }
     die("{$msg}\n");
+  }
+
+  function replace_all($input, $to_replace, $replace_with) {
+    $output = "";
+    $occurrences = substr_count($input, $to_replace);
+    for($i = 0; $i < $occurrences; $i++) {
+      $input = str_replace($to_replace, $replace_with, $input);
+    }
+    return $input;
   }
 
 ?>
