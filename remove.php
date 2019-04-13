@@ -9,7 +9,7 @@
       if($mode === "removeAll") {
         remove_all($class);
       } else if(isset($_POST["assignment"])) {
-        remove_assignment($_POST["assignment"]);
+        remove_assignment($_POST["assignment"], $class);
       } else {
         handle_error("NEED AN ASSIGNMENT TO REMOVE");
       }
@@ -26,7 +26,7 @@
    * @param $class {string} - The class to remove from the user
   */
   function remove_all($class) {
-    remove_assignment($class);
+    remove_assignment("temp_assignment", $class);
   }
 
   /**
