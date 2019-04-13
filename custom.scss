@@ -1,0 +1,35 @@
+// IF CHANGES ARE MADE TO CUSTOM.SCSS,
+// TODO: RE-COMPILE USING NPM
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans:400,900');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.headline {
+  font-family: "Encode Sans" !important;
+}
+
+$theme-colors: (
+  "gold": #e8e3d3,
+  "husky": #4b2e83,
+  "metalgold": #85754d
+);
+
+
+html, body, main {
+  height: 100% !important;
+}
+
+
+
+a {
+  cursor: pointer;
+  color: #000000;
+}
+
+.hidden {
+  display: none;
+}
+
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap-reboot";
+@import "node_modules/bootstrap/scss/bootstrap-grid";
