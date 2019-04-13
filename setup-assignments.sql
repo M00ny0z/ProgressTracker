@@ -1,5 +1,5 @@
 -- Setup file for Assignments database
-USE assignments;
+USE students;
 
 DROP TABLE IF EXISTS Assignments;
 CREATE TABLE Assignments(
