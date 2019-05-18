@@ -7,15 +7,33 @@
   font-family: "Encode Sans" !important;
 }
 
+.quick-link:hover, i {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center !important;
+}
+
+cite {
+  display: block !important;
+  text-align: right !important;
+}
+
 $theme-colors: (
   "gold": #e8e3d3,
   "husky": #4b2e83,
-  "metalgold": #85754d
+  "metalgold": #85754d,
+  "remove": #E36F7A
 );
 
 
 html, body, main {
   height: 100% !important;
+}
+
+main {
+  width: 80%;
 }
 
 
