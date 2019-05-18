@@ -14,11 +14,15 @@
           } else {
             handle_error("NEED A VALID DATE");
           }
-        } else {
+        } else if($mode === "completion") {
           if(is_valid_completion($value)) {
             update_completion($class, $assignment, $value);
           } else {
             handle_error("NEED A VALID COMPLETION STATUS");
+          }
+        } else if($mode === "grade") {
+          if(is_valid_grade($value)) {
+            
           }
         }
       } else {
