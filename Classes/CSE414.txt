@@ -1,0 +1,7 @@
+SQLite
+SQL_Basics
+Advanced_SQl_and_Running_Azure
+NoSQL_With_JSON
+Spark_And_Running_With_AWS
+Schema_Design_And_JDBC_Application
+Transactions_In_The_JDBC_Application

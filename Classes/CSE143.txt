@@ -1,0 +1,8 @@
+Letter_Inventory
+Guitar_Hero
+Assassin_Manager
+Evil_Hangman
+Grammar_Solver
+Anagram_Solver
+20_Questions
+Huffman

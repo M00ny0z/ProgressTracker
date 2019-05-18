@@ -1,0 +1,10 @@
+CP1
+DebugDog
+CP2
+Set!
+CP3
+Pokedex
+CP4
+BestReads
+CP5
+Pokedex Pt.2
