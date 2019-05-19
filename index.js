@@ -59,6 +59,12 @@
     for(let i = 0; i < removeButtons.length; i++) {
       removeButtons[i].addEventListener("click", addToRemove);
     }
+    let seriesButtons = document.querySelectorAll(".series");
+    for(let i = 0; i < seriesButtons.length; i++) {
+      seriesButtons[i].addEventListener("click", function() {
+        addSubjectSeries(this.parentElement.parentElement.querySelector(".selected-series"), this.getAttribute("series"));
+      });
+    }
   }
 
 
@@ -88,7 +94,6 @@
     let addClassBtn = document.getElementById("add-class-btn");
     let classHeader = document.getElementById("class-name");
     if(classHeader.innerHTML === "Class X") {
-      console.log("first class:");
       // GETS THE ASSIGNMENTS FOR THE FIRST TIME
       getAssignments(classData.classes[0]);
     }
@@ -161,7 +166,6 @@
   }
 
   function getAssignments(className) {
-    console.log("info.php?mode=getAssigns&class=" + className);
     fetch("info.php?mode=getAssigns&class=" + className)
       .then(checkStatus)
       .then(JSON.parse)
@@ -180,7 +184,6 @@
       let newSwitch = createSwitch(i);
       let newCalendar = createCalendar(i, assignData.assignments[i].duedate);
       let newTurnIn = document.createElement("td");
-      console.log(assignData.assignments[i].turnin);
       // ADD ASSIGNMENT TURN IN TIME
       if(assignData.assignments[i].turnin === null) {
         newTurnIn.innerHTML = "N/A";
@@ -216,22 +219,61 @@
   }
 
   function addSubjectSeries(modalParent, series) {
+    modalParent.innerHTML = "";
     let seriesMap = new Map();
     seriesMap.set("MATH", ["MATH120", "MATH124", "MATH125", "MATH126"]);
     seriesMap.set("CSE", ["CSE142", "CSE143"]);
-    seriesMap.set("PHYS", ["PHYS121", "PHYS122", "PHYS123"]);
     seriesMap.set("PHYS", ["PHYS121", "PHYS122", "PHYS123"]);
     seriesMap.set("CHEM", ["CHEM142", "CHEM152", "CHEM162"]);
     seriesMap.set("BIOL", ["BIOL180", "BIOL200", "BIOL220"]);
     let selectedSeries = seriesMap.get(series);
     for(let i = 0; i < selectedSeries.length; i++) {
       let newButton = document.createElement("button");
-      button.classList.add("btn");
-      button.classList.add("btn-husky");
-      button.classList.add("btn-lg");
-      button.classList.add("mb-1");
-      button.innerHTML = selectedSeries[i];
+      newButton.classList.add("btn");
+      newButton.classList.add("btn-husky");
+      newButton.classList.add("btn-lg");
+      newButton.classList.add("mb-1");
+      newButton.innerHTML = selectedSeries[i];
+      newButton.addEventListener("click", addNewClass);
+      modalParent.appendChild(newButton);
     }
+  }
+
+  function addNewClass() {
+    let classFormData = new FormData();
+    classFormData.append("class", this.innerText);
+    classFormData.append("mode", "autoClass");
+    fetch("add.php", {method: "POST", body: classFormData})
+      .then(checkStatus)
+      .then(function() {
+        successAlert("Successfully Added Class!");
+      })
+      .catch(console.log)
+  }
+
+  /**
+    * Creates an alert depending on the message passed, removes it after 2 seconds
+    * @param {String} message - The message to include in the alert
+  */
+  function createAlert(message, type) {
+    let nextTo = document.getElementById("assign-cont");
+    let newAlert = document.createElement("div");
+    newAlert.classList.add("alert");
+    newAlert.role="alert";
+    newAlert.classList.add(type);
+    newAlert.innerText = message;
+    nextTo.insertAdjacentElement("afterend", newAlert);
+    setTimeout(function() {
+      nextTo.parentElement.removeChild(newAlert);
+    }, 2000);
+  }
+
+  function redAlert(message) {
+    createAlert(message, "alert-danger");
+  }
+
+  function successAlert(message) {
+    createAlert(message, "alert-success");
   }
 
   function switchActiveListItem() {
