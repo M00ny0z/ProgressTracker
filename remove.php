@@ -1,15 +1,16 @@
 <?php
   include("common.php");
   $db = get_PDO();
+  $NETID = "em66";
 
   if(isset($_POST["mode"])) {
     $mode = $_POST["mode"];
     if(isset($_POST["class"])) {
       $class = $_POST["class"];
-      if($mode === "removeAll") {
-        remove_all($class);
-      } else if(isset($_POST["assignment"])) {
-        remove_assignment($_POST["assignment"], $class);
+      if($mode === "removeClass") {
+        remove_class($class, $NETID, $db);
+      } else if(isset($_POST["assignment"]) && $mode === "removeAssign") {
+        remove_assignment($_POST["assignment"], $class, $NETID, $db);
       } else {
         handle_error("NEED AN ASSIGNMENT TO REMOVE");
       }
@@ -25,16 +26,45 @@
    * user
    * @param $class {string} - The class to remove from the user
   */
-  function remove_all($class) {
-    remove_assignment("temp_assignment", $class);
+  function remove_class($class, $netid, $db) {
+    try {
+      $query = "DELETE
+                FROM Assignments
+                WHERE netid = '" . $netid . "' AND class = '" . $class . "';";
+      $db->query($query);
+      $stmt = $db->prepare($query);
+    } catch(PDOException $ex) {
+      handle_error(DATABASE_ERROR, $ex);
+    }
+
+    try {
+      $query = "DELETE
+                FROM Enrolls
+                WHERE netid = '" . $netid . "' AND class = '" . $class . "';";
+      $db->query($query);
+      $stmt = $db->prepare($query);
+    } catch(PDOException $ex) {
+      handle_error(DATABASE_ERROR, $ex);
+    }
   }
+
+
 
   /**
    * Removes a specified assignment of a specified class
    * user
    * @param $class {string} - The class to remove from the user
   */
-  function remove_assignment($assignment, $class) {
-    echo "Successfully removed";
+  function remove_assignment($assignment, $class, $netid, $db) {
+    try {
+      $query = "DELETE
+                FROM Assignments
+                WHERE name = " . "'" . $assignment . "' AND netid = '" . $netid . "' AND "
+                . "class = '" . $class . "';";
+      $db->query($query);
+      $stmt = $db->prepare($query);
+    } catch(PDOException $ex) {
+      handle_error(DATABASE_ERROR, $ex);
+    }
   }
 ?>
